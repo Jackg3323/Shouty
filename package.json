@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --es-module-specifier-resolution=node -I --watch app",
-    "test": "jest"
+    "test": "jest && cucumber-js -f @cucumber/pretty-formatter"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
