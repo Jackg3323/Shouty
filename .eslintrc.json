@@ -7,7 +7,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["jest"],
+  "plugins": ["cucumber", "jest"],
   "rules": {
     "array-callback-return": "warn",
     "capitalized-comments": "off",
