@@ -14,6 +14,7 @@
     "new-cap": "off",
     "no-console": 1,
     "padding-line-between-statements": "warn",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "cucumber/no-arrow-functions": 1
   }
 }
