@@ -1,7 +1,11 @@
-import { Given, Then, When } from "@cucumber/cucumber";
+import { Before, Given, Then, When } from "@cucumber/cucumber";
 import { expect } from "expect";
 import Network from "../../src/models/Network.js";
 import Person from "../../src/models/Person.js";
+
+Before(function () {
+  this.persons = {};
+});
 
 // Given("Lucy is located {float} meters away from Sean", function (distance) {
 //   this.network = new Network();
@@ -14,28 +18,31 @@ import Person from "../../src/models/Person.js";
 // });
 
 Given("the range is {float}", function (range) {
-  // Write code here that turns the phrase above into concrete actions
   this.network = new Network(range);
 });
 
-Given("Sean is located at {float}", function (shouterPos) {
-  // Write code here that turns the phrase above into concrete actions
-  this.shouter = new Person({ name: "Sean", network: this.network });
-});
-
-Given("Lucy is located at {float}", function (listenerPos) {
-  // Write code here that turns the phrase above into concrete actions
-  this.listener = new Person({
-    name: "Lucy",
+Given("{person} is located at {float}", function (name, pos) {
+  this.persons[name.toLowerCase()] = new Person({
+    name,
     network: this.network,
-    position: listenerPos,
+    pos,
   });
 });
 
-When("Sean shouts {string}", function (msg) {
-  this.shouter.shout(msg);
+// Given("Lucy is located at {float}", function (listenerPos) {
+//   this.listener = new Person({
+//     name: "Lucy",
+//     network: this.network,
+//     position: listenerPos,
+//   });
+// });
+
+When("{shouter} shouts {string}", function (shouter, msg) {
+  this.persons[shouter.toLowerCase()].shout(msg);
 });
 
-Then("Lucy hears Sean's Shout", function () {
-  expect(this.listener.messages).toEqual(this.shouter.shouts);
+Then("{listener} hears {shouter}'s Shout", function (listener, shouter) {
+  expect(this.persons[listener.toLowerCase()].messages).toEqual(
+    this.persons[shouter.toLowerCase()].messages
+  );
 });
